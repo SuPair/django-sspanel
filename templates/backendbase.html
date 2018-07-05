@@ -5,21 +5,7 @@
 <head>
     {% load staticfiles %}
     <title>{% settings_value "TITLE" %}</title>
-    <!-- meta -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href=" {% static 'img/logo/logo.ico' %}" />
-    <!-- css -->
-    <link rel="stylesheet" href="{% static 'sspanel/css/bulma.css'%}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'sspanel/css/ehco.css'%}">
-    <link rel="stylesheet" href="{% static 'sspanel/css/sweetalert.css'%}">
-    <!-- js -->
-    <script src="{% static 'sspanel/js/jquery-2.1.3.min.js' %}"></script>
-    <script src="{% static 'sspanel/js/sweetalert.min.js' %}"></script>
-    <script src="{% static 'sspanel/js/ehco.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
-
+    {% include "basehead.html" %}
 </head>
 
 <body>
@@ -36,13 +22,13 @@
         </div>
         <div id="navMenuColorprimary-example" class="navbar-menu">
             <div class="navbar-end">
-                <a class="navbar-item is-hidden-mobile" href="/">首页</a>
-                <a class="navbar-item is-hidden-mobile" href="/sshelp">使用说明</a>
-                <a class="navbar-item is-hidden-mobile" href="/ssinvite">邀请码</a>
-                <a class="navbar-item is-hidden-mobile" href="/ssclient">客户端</a>
+                <a class="navbar-item" href="{% url 'sspanel:index' %}">首页</a>
+                <a class="navbar-item" href="{% url 'sspanel:sshelp' %}">使用说明</a>
+                <a class="navbar-item" href="{% url 'sspanel:ssinvite' %}">邀请码</a>
+                <a class="navbar-item" href="{% url 'sspanel:ssclient' %}">客户端</a>
                 <div class="navbar-item has-dropdown is-hoverable is-hidden-mobile">
                     <span class="navbar-item">
-                        <a class="button is-primary is-inverted" href="{% url 'shadowsocks:userinfo' %}">
+                        <a class="button is-primary is-inverted" href="{% url 'sspanel:userinfo' %}">
                             <span class="icon">
                                 <i class="fa fa-user-circle"></i>
                             </span>
@@ -50,14 +36,14 @@
                         </a>
                     </span>
                     <div class="navbar-dropdown">
-                        <a class="navbar-item" href="{% url 'shadowsocks:userinfo' %}">
+                        <a class="navbar-item" href="{% url 'sspanel:userinfo' %}">
                             <span class="icon">
                                 <i class="fa fa-users"></i>
                             </span>
                             <span>用户中心</span>
                         </a>
                         <hr class="navbar-divider">
-                        <a class="navbar-item" href="{% url 'shadowsocks:logout' %}">
+                        <a class="navbar-item" href="{% url 'sspanel:logout' %}">
                             <span class="icon">
                                 <i class="fa fa-sign-out"></i>
                             </span>
@@ -67,18 +53,24 @@
                 </div>
                 <!-- 手机界面菜单-->
                 <div class="is-hidden-tablet">
-                    <a class="navbar-item is-active" href="{% url 'shadowsocks:backend_index' %}">系统状态</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:backend_invite' %}">邀请相关</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:backend_anno' %}">公告管理</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:backend_ticket' %}">工单管理</a>
-                    <a class="navbar-item is-active" href="{% url 'shadowsocks:backend_node_info' %}">节点列表</a>
-                    <a class="navbar-item is-active" href="{% url 'shadowsocks:backend_charge' %}">充值管理</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:backend_shop' %}">商品管理</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:purchase_history' %}">购买记录</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:user_list' %}">用户列表</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:user_status' %}">用户分析</a>                    
-                    <a class="navbar-item is-active" href="/admin">数据后台</a>
-                    <a class="navbar-item" href="{% url 'shadowsocks:userinfo' %}">用户面板</a>
+                    <a class="navbar-item is-active">面板管理</a>
+                    <a class="navbar-item" href="{% url 'sspanel:backend_index' %}">系统状态</a>
+                    <a class="navbar-item" href="{% url 'sspanel:backend_invite' %}">邀请相关</a>
+                    <a class="navbar-item" href="{% url 'sspanel:backend_anno' %}">公告管理</a>
+                    <a class="navbar-item" href="{% url 'sspanel:backend_ticket' %}">工单管理</a>
+                    <a class="navbar-item is-active">节点管理</a>
+                    <a class="navbar-item" href="{% url 'sspanel:backend_node_info' %}">节点列表</a>
+                    <a class="navbar-item" href="{% url 'sspanel:alive_user' %}">在线IP</a>
+                    <a class="navbar-item is-active">交易管理</a>
+                    <a class="navbar-item" href="{% url 'sspanel:backend_charge' %}">充值管理</a>
+                    <a class="navbar-item" href="{% url 'sspanel:backend_shop' %}">商品管理</a>
+                    <a class="navbar-item" href="{% url 'sspanel:purchase_history' %}">购买记录</a>
+                    <a class="navbar-item is-active">用户管理</a>
+                    <a class="navbar-item" href="{% url 'sspanel:user_list' %}">用户列表</a>
+                    <a class="navbar-item" href="{% url 'sspanel:user_status' %}">用户分析</a>
+                    <a class="navbar-item is-active">面板跳转</a>
+                    <a class="navbar-item" href="/admin">数据后台</a>
+                    <a class="navbar-item" href="{% url 'sspanel:userinfo' %}">用户面板</a>
                 </div>
             </div>
         </div>
@@ -106,53 +98,56 @@
                     {% if user.is_authenticated %}
                     <aside class="menu">
                         <p class="menu-label">
-                            管理面板：
+                            面板管理
                         </p>
                         <ul class="menu-list">
                             <li>
-                                <a href="{% url 'shadowsocks:backend_index' %}">系统状态</a>
+                                <a href="{% url 'sspanel:backend_index' %}">系统状态</a>
                             </li>
                             <li>
-                                <a href="{% url 'shadowsocks:backend_invite' %}">邀请相关</a>
+                                <a href="{% url 'sspanel:backend_invite' %}">邀请相关</a>
                             </li>
                             <li>
-                                <a href="{% url 'shadowsocks:backend_anno' %}">公告管理</a>
+                                <a href="{% url 'sspanel:backend_anno' %}">公告管理</a>
                             </li>
                             <li>
-                                <a href="{% url 'shadowsocks:backend_ticket' %}">工单管理</a>
+                                <a href="{% url 'sspanel:backend_ticket' %}">工单管理</a>
                             </li>
                         </ul>
                         <p class="menu-label">
-                            节点相关
+                            节点管理
                         </p>
                         <ul class="menu-list">
                             <li>
-                                <a href="{% url 'shadowsocks:backend_node_info' %}">节点列表</a>
+                                <a href="{% url 'sspanel:backend_node_info' %}">节点列表</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'sspanel:alive_user' %}">在线IP</a>
                             </li>
                         </ul>
                         <p class="menu-label">
-                            交易相关
+                            交易管理
                         </p>
                         <ul class="menu-list">
                             <li>
-                                <a href="{% url 'shadowsocks:backend_charge' %}">充值管理</a>
+                                <a href="{% url 'sspanel:backend_charge' %}">充值管理</a>
                             </li>
                             <li>
-                                <a href="{% url 'shadowsocks:backend_shop' %}">商品管理</a>
+                                <a href="{% url 'sspanel:backend_shop' %}">商品管理</a>
                             </li>
                             <li>
-                                <a href="{% url 'shadowsocks:purchase_history' %}">购买记录</a>
+                                <a href="{% url 'sspanel:purchase_history' %}">购买记录</a>
                             </li>
                         </ul>
                         <p class="menu-label">
-                            用户相关
+                            用户管理
                         </p>
                         <ul class="menu-list">
                             <li>
-                                <a href="{% url 'shadowsocks:user_list' %}">用户列表</a>
+                                <a href="{% url 'sspanel:user_list' %}">用户列表</a>
                             </li>
                             <li>
-                                <a href="{% url 'shadowsocks:user_status' %}">用户分析</a>
+                                <a href="{% url 'sspanel:user_status' %}">用户分析</a>
                             </li>
                         </ul>
                         <p class="menu-label">
@@ -165,22 +160,18 @@
                         </ul>
                         <ul class="menu-list">
                             <li>
-                                <a href="{% url 'shadowsocks:userinfo' %}">用户面板</a>
+                                <a href="{% url 'sspanel:userinfo' %}">用户面板</a>
                             </li>
                         </ul>
                         {% endif %}
                     </aside>
                 </div>
             </div>
-
             <div class="column is-10">
-
                 {% block main %} {% endblock main%}
-
             </div>
         </div>
     </div>
-
     <footer>
         <div class="container">
             <div class="content has-text-centered">
@@ -194,7 +185,6 @@
         </div>
     </footer>
 </body>
-
 <!--整站消息提醒功能 -->
 {% if registerinfo %}
 <script>
